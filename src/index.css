@@ -34,7 +34,8 @@
 * {
   margin: 0;
   padding: 0;
-  font-family: "IranSans";
+/*   font-family: "IranSans"; */
+  font-family: "Rubik", sans-serif;
   outline: none;
   list-style: none;
 }
