@@ -30,6 +30,20 @@ export default function App() {
   const [taskList, setTaskList] = useState(initialTasks);
   const [task, setTask] = useState("");
   const [isFocus, setIsFocus] = useState(false);
+  const [isOpenSetting, setIsOpenSetting] = useState(false);
+
+  const [sortBy, setSortBy] = useState("input");
+  let sortedItems;
+
+  if (sortBy === "input") {
+    sortedItems = taskList;
+  } else if (sortBy === "description") {
+    sortedItems = taskList
+      .slice()
+      .sort((a, b) => a.title.localeCompare(b.title));
+  } else if (sortBy === "packed") {
+    sortedItems = taskList.slice().sort((a, b) => +a.checked - +b.checked);
+  }
 
   function handleDeleteItem(id) {
     setTaskList((items) => items.filter((item) => item.id !== id));
@@ -49,7 +63,14 @@ export default function App() {
       {isOpen ? (
         <div className="app">
           <div className="task-box box-shadow">
-            <CloseBtn onOpen={setIsOpen} />
+            <CloseBtn
+              onOpen={setIsOpen}
+              styleArr={{
+                display: "flex",
+                justifyContent: "end",
+                margin: "10px 15px 30px 0",
+              }}
+            />
             <div className="task-container">
               <AddTaskForm
                 task={task}
@@ -59,8 +80,52 @@ export default function App() {
                 isFocus={isFocus}
                 onFocus={setIsFocus}
               />
+
+              {isOpenSetting ? (
+                <div className="task-list-setting">
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                  >
+                    <option value="input"> Sort by input</option>
+                    <option value="description"> Sort by title</option>
+                    <option value="packed"> Sort by checked item</option>
+                  </select>
+
+                  <Button
+                    classNameStyle="task-item-btn clear-btn"
+                    onClick={() => setTaskList([])}
+                  >
+                    Clear List
+                  </Button>
+                  <CloseBtn
+                    onOpen={setIsOpenSetting}
+                    styleArr={{
+                      margin: "10px 0 0 0",
+                    }}
+                  />
+                </div>
+              ) : (
+                <div
+                  onClick={() => setIsOpenSetting(true)}
+                  style={{
+                    padding: "0.65rem 1.7rem 0 0",
+                    display: "flex",
+                    justifyContent: "end",
+                    cursor: "pointer",
+                  }}
+                >
+                  <lord-icon
+                    src="https://cdn.lordicon.com/ifsxxxte.json"
+                    trigger="hover"
+                    colors="primary:#adb5bd"
+                    style={{ width: "25px", height: "25px" }}
+                  ></lord-icon>
+                </div>
+              )}
+
               <ul className="task-list">
-                {taskList.map((task, i) => (
+                {sortedItems.map((task, i) => (
                   <TaskItem
                     task={task}
                     num={i}
@@ -96,16 +161,9 @@ function Logo({ children }) {
   );
 }
 
-function CloseBtn({ onOpen }) {
+function CloseBtn({ onOpen, styleArr }) {
   return (
-    <div
-      onClick={() => onOpen(false)}
-      style={{
-        display: "flex",
-        justifyContent: "end",
-        margin: "10px 15px 30px 0",
-      }}
-    >
+    <div onClick={() => onOpen(false)} style={styleArr}>
       <lord-icon
         src="https://cdn.lordicon.com/zxvuvcnc.json"
         trigger="hover"
