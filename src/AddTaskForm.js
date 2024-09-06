@@ -1,4 +1,4 @@
-import { Form } from "./Form";
+import { Form } from "./App";
 
 export function AddTaskForm({
   task,
