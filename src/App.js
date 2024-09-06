@@ -4,7 +4,7 @@ import { AddTaskForm } from "./AddTaskForm";
 
 const initialTasks = [
   {
-    title: "Go to school",
+    title: "Star The Repository ⭐️",
     id: crypto.randomUUID(),
     checked: false,
     date: "2024, 8, 2 22:12",
