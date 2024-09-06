@@ -19,11 +19,11 @@ Check out the live demo of the app here: [Live Demo](https://main--todo-list-rea
 
 Here are some snapshots of the application:
 
-![Screenshot 1](./screen-shots/screenshot1.png)
-![Screenshot 2](./screen-shots/screenshot2.png)
-![Screenshot 3](./screen-shots/screenshot3.png)
-![Screenshot 4](./screen-shots/screenshot4.png)
-![Screenshot 5](./screen-shots/screenshot5.png)
+![Screenshot 1](./screen-shots/1.jpg)
+![Screenshot 2](./screen-shots/2.jpg)
+![Screenshot 3](./screen-shots/3.jpg)
+![Screenshot 4](./screen-shots/4.jpg)
+![Screenshot 5](./screen-shots/5.jpg)
 
 ## ⚙️ How to Run the App Locally
 
