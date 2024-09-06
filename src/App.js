@@ -10,7 +10,7 @@ const initialTasks = [
     date: "2024, 8, 2 22:12",
   },
   {
-    title: "Practice Germany",
+    title: "Did you star the repository?",
     id: crypto.randomUUID(),
     checked: false,
     date: "2022, 5, 3 12:12",
