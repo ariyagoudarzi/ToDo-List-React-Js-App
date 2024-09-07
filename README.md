@@ -1,7 +1,6 @@
 
-# 📋 ToDo List React App 🚀
-
-Welcome to the **ToDo List** application built using **React.js**! This simple yet powerful app helps you manage your daily tasks with ease. Stay organized, stay productive! 💪
+<h1 align='center'><b>📋 ToDo List React App 🚀</b></h1>
+<p align='center'>Welcome to the **ToDo List** application built using **React.js**! This simple yet powerful app helps you manage your daily tasks with ease. Stay organized, stay productive! 💪</p>
 
 ## 🌟 Features
 
@@ -19,6 +18,7 @@ Check out the live demo of the app here: [Live Demo](https://main--todo-list-rea
 
 Here are some snapshots of the application:
 
+![Screenshot 1](./screen-shots/test.mp4)
 ![Screenshot 1](./screen-shots/1.jpg)
 ![Screenshot 2](./screen-shots/2.jpg)
 ![Screenshot 3](./screen-shots/3.jpg)
