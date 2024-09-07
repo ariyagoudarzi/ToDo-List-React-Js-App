@@ -18,7 +18,7 @@ Check out the live demo of the app here: [Live Demo](https://main--todo-list-rea
 
 Here are some snapshots of the application:
 
-![Video 1](https://github.com/ariyagoudarzi/ToDo-List-React-Js-App/raw/main/screen-shots/test.mp4)
+https://github.com/ariyagoudarzi/ToDo-List-React-Js-App/raw/main/screen-shots/test.mp4
 ![Screenshot 1](./screen-shots/1.jpg)
 ![Screenshot 2](./screen-shots/2.jpg)
 ![Screenshot 3](./screen-shots/3.jpg)
