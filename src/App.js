@@ -13,9 +13,10 @@ export function Button({ onClick, classNameStyle, children }) {
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [taskList, setTaskList] = useState(() =>
-    JSON.parse(localStorage.getItem("taskList"))
-  );
+  // const [taskList, setTaskList] = useState(() =>
+  //   JSON.parse(localStorage.getItem("taskList"))
+  // );
+  const [taskList, setTaskList] = useState([]);
   const [task, setTask] = useState("");
   const [isFocus, setIsFocus] = useState(false);
   const [isOpenSetting, setIsOpenSetting] = useState(false);
