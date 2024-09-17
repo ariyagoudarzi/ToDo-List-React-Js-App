@@ -1,21 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { TaskItem } from "./TaskItem";
 import { AddTaskForm } from "./AddTaskForm";
-
-const initialTasks = [
-  {
-    title: "Star The Repository ⭐️",
-    id: crypto.randomUUID(),
-    checked: false,
-    date: "2024, 8, 2 22:12",
-  },
-  {
-    title: "Did you star the repository?",
-    id: crypto.randomUUID(),
-    checked: false,
-    date: "2022, 5, 3 12:12",
-  },
-];
 
 export function Button({ onClick, classNameStyle, children }) {
   return (
@@ -26,11 +11,16 @@ export function Button({ onClick, classNameStyle, children }) {
 }
 
 export default function App() {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [taskList, setTaskList] = useState(initialTasks);
+  const [taskList, setTaskList] = useState(() =>
+    JSON.parse(localStorage.getItem("taskList"))
+  );
   const [task, setTask] = useState("");
   const [isFocus, setIsFocus] = useState(false);
   const [isOpenSetting, setIsOpenSetting] = useState(false);
+
+  const appEl = useRef(null);
 
   const [sortBy, setSortBy] = useState("input");
   let sortedItems;
@@ -57,99 +47,146 @@ export default function App() {
     );
   }
 
-  return (
-    <>
-      <Logo>Aria Gdrz</Logo>
-      {isOpen ? (
-        <div className="app">
-          <div className="task-box box-shadow">
-            <CloseBtn
-              onOpen={setIsOpen}
-              styleArr={{
-                display: "flex",
-                justifyContent: "end",
-                margin: "10px 15px 30px 0",
-              }}
-            />
-            <div className="task-container">
-              <AddTaskForm
-                task={task}
-                onSetTask={setTask}
-                taskList={taskList}
-                onSetTaskList={setTaskList}
-                isFocus={isFocus}
-                onFocus={setIsFocus}
+  useEffect(function () {
+    window.addEventListener("load", () => setIsLoaded(true));
+  }, []);
+
+  useEffect(
+    function () {
+      localStorage.setItem("taskList", JSON.stringify(taskList));
+    },
+    [taskList]
+  );
+
+  useEffect(function () {
+    function callBack(e) {
+      if (e.code === "Space") {
+        setIsOpen((isOpen) => !isOpen);
+      }
+    }
+    document.addEventListener("keydown", callBack);
+    return function () {
+      document.removeEventListener("keydown", callBack);
+    };
+  }, []);
+
+  useEffect(function () {
+    function callBack(e) {
+      if (e.code === "Escape") {
+        setIsOpen(false);
+      }
+    }
+    document.addEventListener("keydown", callBack);
+    return function () {
+      document.removeEventListener("keydown", callBack);
+    };
+  }, []);
+
+  if (!isLoaded) {
+    return (
+      <lord-icon
+        src="https://cdn.lordicon.com/gkryirhd.json"
+        trigger="loop"
+        state="loop-snake"
+        colors="primary:#dee2e6"
+        style={{ width: "75px", height: "75px" }}
+      ></lord-icon>
+    );
+  } else {
+    return (
+      <>
+        <Logo>Aria Gdrz</Logo>
+        {isOpen ? (
+          <div className="app" ref={appEl}>
+            <div className="task-box box-shadow">
+              <CloseBtn
+                onOpen={setIsOpen}
+                styleArr={{
+                  display: "flex",
+                  justifyContent: "end",
+                  margin: "10px 15px 30px 0",
+                }}
               />
+              <div className="task-container">
+                <AddTaskForm
+                  task={task}
+                  onSetTask={setTask}
+                  taskList={taskList}
+                  onSetTaskList={setTaskList}
+                  isFocus={isFocus}
+                  onFocus={setIsFocus}
+                />
 
-              {isOpenSetting ? (
-                <div className="task-list-setting">
-                  <select
-                    value={sortBy}
-                    onChange={(e) => setSortBy(e.target.value)}
-                  >
-                    <option value="input"> Sort by input</option>
-                    <option value="description"> Sort by title</option>
-                    <option value="packed"> Sort by checked item</option>
-                  </select>
+                {isOpenSetting ? (
+                  <div className="task-list-setting">
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value)}
+                    >
+                      <option value="input"> Sort by input</option>
+                      <option value="description"> Sort by title</option>
+                      <option value="packed"> Sort by checked item</option>
+                    </select>
 
-                  <Button
-                    classNameStyle="task-item-btn clear-btn"
-                    onClick={() => setTaskList([])}
-                  >
-                    Clear List
-                  </Button>
-                  <CloseBtn
-                    onOpen={setIsOpenSetting}
-                    styleArr={{
-                      margin: "10px 0 0 0",
+                    <Button
+                      classNameStyle="task-item-btn clear-btn"
+                      onClick={() => setTaskList([])}
+                    >
+                      Clear List
+                    </Button>
+                    <CloseBtn
+                      onOpen={setIsOpenSetting}
+                      styleArr={{
+                        margin: "10px 0 0 0",
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div
+                    onClick={() => setIsOpenSetting(true)}
+                    style={{
+                      padding: "0.65rem 1.7rem 0 0",
+                      display: "flex",
+                      justifyContent: "end",
+                      cursor: "pointer",
                     }}
-                  />
-                </div>
-              ) : (
-                <div
-                  onClick={() => setIsOpenSetting(true)}
-                  style={{
-                    padding: "0.65rem 1.7rem 0 0",
-                    display: "flex",
-                    justifyContent: "end",
-                    cursor: "pointer",
-                  }}
-                >
-                  <lord-icon
-                    src="https://cdn.lordicon.com/ifsxxxte.json"
-                    trigger="hover"
-                    colors="primary:#adb5bd"
-                    style={{ width: "25px", height: "25px" }}
-                  ></lord-icon>
-                </div>
-              )}
+                  >
+                    <lord-icon
+                      src="https://cdn.lordicon.com/ifsxxxte.json"
+                      trigger="hover"
+                      colors="primary:#adb5bd"
+                      style={{ width: "25px", height: "25px" }}
+                    ></lord-icon>
+                  </div>
+                )}
 
-              <ul className="task-list">
-                {sortedItems.map((task, i) => (
-                  <TaskItem
-                    task={task}
-                    num={i}
-                    key={task.id}
-                    onDeleteItem={handleDeleteItem}
-                    onCheckItem={handleCheckItem}
-                    isFocus={isFocus}
-                    onFocus={setIsFocus}
-                  />
-                ))}
-              </ul>
+                <ul className="task-list">
+                  {sortedItems.map((task, i) => (
+                    <TaskItem
+                      task={task}
+                      num={i}
+                      key={task.id}
+                      onDeleteItem={handleDeleteItem}
+                      onCheckItem={handleCheckItem}
+                      isFocus={isFocus}
+                      onFocus={setIsFocus}
+                    />
+                  ))}
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-      ) : (
-        <Button
-          classNameStyle="custom-btn btn-5"
-          onClick={() => setIsOpen(true)}
-        >
-          <span>Open</span>
-        </Button>
-      )}
-    </>
-  );
+        ) : (
+          <Button
+            classNameStyle="custom-btn btn-5"
+            onClick={() => setIsOpen(true)}
+          >
+            <span>Open</span>
+          </Button>
+        )}
+      </>
+    );
+  }
 }
 
 function Logo({ children }) {
@@ -176,9 +213,26 @@ function CloseBtn({ onOpen, styleArr }) {
 }
 
 export function Form({ value, onValue, handleValue, isFocus, onFocus }) {
+  const inputEl = useRef(null);
+
   function handleAddShadow() {
     onFocus(true);
   }
+
+  useEffect(function () {
+    function callBack(e) {
+      if (e.code === "Enter") {
+        inputEl.current.focus();
+      }
+    }
+
+    document.addEventListener("keydown", callBack);
+
+    return function () {
+      document.removeEventListener("keydown", callBack);
+    };
+  }, []);
+
   return (
     <form onSubmit={handleValue}>
       <input
@@ -188,10 +242,11 @@ export function Form({ value, onValue, handleValue, isFocus, onFocus }) {
         onChange={(e) => onValue(e.target.value)}
         className={isFocus ? "box-shadow" : ""}
         onFocus={handleAddShadow}
+        ref={inputEl}
       />
       <Button classNameStyle={`addBtn ${isFocus ? "box-shadow" : ""}`}>
-        <b>
-          Add <i class="fa-solid fa-plus"></i>
+        <b style={{ display: "flex", alignItems: "center" }}>
+           Add <i class="fa-solid fa-plus"></i>
         </b>
       </Button>
     </form>
