@@ -161,7 +161,7 @@ export default function App() {
                 )}
 
                 <ul className="task-list">
-                  {sortedItems.map((task, i) => (
+                  {sortedItems?.map((task, i) => (
                     <TaskItem
                       task={task}
                       num={i}
