@@ -34,8 +34,7 @@
 * {
   margin: 0;
   padding: 0;
-/*   font-family: "IranSans"; */
-  font-family: "Rubik", sans-serif;
+  font-family: "IranSans";
   outline: none;
   list-style: none;
 }
@@ -226,8 +225,15 @@ select {
   align-items: center;
   width: 5rem;
 }
+
 .addBtn i {
   font-size: 15px;
+  margin: 0 5px;
+}
+
+.btn-close {
+  background: none;
+  padding: 0;
 }
 
 .task-item-box {
