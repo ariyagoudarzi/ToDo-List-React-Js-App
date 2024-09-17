@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { TaskItem } from "./TaskItem";
 import { AddTaskForm } from "./AddTaskForm";
+import { useLocalStorage } from "./useLocalStorage";
 
 export function Button({ onClick, classNameStyle, children }) {
   return (
@@ -13,10 +14,7 @@ export function Button({ onClick, classNameStyle, children }) {
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  // const [taskList, setTaskList] = useState(() =>
-  //   JSON.parse(localStorage.getItem("taskList"))
-  // );
-  const [taskList, setTaskList] = useState([]);
+  const [taskList, setTaskList] = useLocalStorage([], "taskList");
   const [task, setTask] = useState("");
   const [isFocus, setIsFocus] = useState(false);
   const [isOpenSetting, setIsOpenSetting] = useState(false);
@@ -52,12 +50,12 @@ export default function App() {
     window.addEventListener("load", () => setIsLoaded(true));
   }, []);
 
-  useEffect(
-    function () {
-      localStorage.setItem("taskList", JSON.stringify(taskList));
-    },
-    [taskList]
-  );
+  // useEffect(
+  //   function () {
+  //     localStorage.setItem("taskList", JSON.stringify(taskList));
+  //   },
+  //   [taskList]
+  // );
 
   useEffect(function () {
     function callBack(e) {
@@ -223,6 +221,8 @@ export function Form({ value, onValue, handleValue, isFocus, onFocus }) {
   useEffect(function () {
     function callBack(e) {
       if (e.code === "Enter") {
+        if (inputEl.current === document.activeElement) return;
+
         inputEl.current.focus();
       }
     }
@@ -247,7 +247,7 @@ export function Form({ value, onValue, handleValue, isFocus, onFocus }) {
       />
       <Button classNameStyle={`addBtn ${isFocus ? "box-shadow" : ""}`}>
         <b style={{ display: "flex", alignItems: "center" }}>
-           Add <i class="fa-solid fa-plus"></i>
+          Add <i className="fa-solid fa-plus"></i>
         </b>
       </Button>
     </form>
