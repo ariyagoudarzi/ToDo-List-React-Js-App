@@ -7,6 +7,7 @@
 - ✅ Add tasks effortlessly.
 - 📝 Edit and update tasks.
 - 🗑️ Delete tasks that are completed or unnecessary.
+- 📅 Save youe tasks when you are'nt using the app.
 - ⏳ Mark tasks as pending or completed.
 - 📅 Clear all tasks with a single click.
 
